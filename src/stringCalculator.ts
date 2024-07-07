@@ -8,6 +8,22 @@ export class StringCalculator {
       return parseInt(numbers, 10);
     }
 
+    const { delimiter, sanitizedNumbers } =
+      this.extractDelimiterAndNumbers(numbers);
+    const numArray = this.splitStringNumberstoIntegers(
+      sanitizedNumbers,
+      delimiter
+    );
+
+    this.throwIfNegativeNumbers(numArray);
+
+    return this.sumNumbers(numArray);
+  }
+
+  private extractDelimiterAndNumbers(numbers: string): {
+    delimiter: string;
+    sanitizedNumbers: string;
+  } {
     let delimiter = ",";
     if (numbers.startsWith("//")) {
       const delimiterEndIndex = numbers.indexOf("\n");
@@ -15,14 +31,8 @@ export class StringCalculator {
       numbers = numbers.substring(delimiterEndIndex + 1);
     }
 
-    numbers = numbers.replace(/\n/g, delimiter);
-    const numArray = this.splitStringNumberstoIntegers(numbers, delimiter);
-    const negativeNumbers = numArray.filter((num) => num < 0);
-
-    if (negativeNumbers.length > 0) {
-      throw new Error(`Negatives not allowed: ${negativeNumbers.join(",")}`);
-    }
-    return numArray.reduce((sum, num) => sum + num, 0);
+    const sanitizedNumbers = numbers.replace(/\n/g, delimiter);
+    return { delimiter, sanitizedNumbers };
   }
 
   private splitStringNumberstoIntegers(
@@ -30,5 +40,16 @@ export class StringCalculator {
     delimiter: string
   ): number[] {
     return numbers.split(delimiter).map((num) => parseInt(num, 10));
+  }
+
+  private throwIfNegativeNumbers(numbers: number[]): void {
+    const negativeNumbers = numbers.filter((num) => num < 0);
+    if (negativeNumbers.length > 0) {
+      throw new Error(`Negatives not allowed: ${negativeNumbers.join(",")}`);
+    }
+  }
+
+  private sumNumbers(numbers: number[]): number {
+    return numbers.reduce((sum, num) => sum + num, 0);
   }
 }
