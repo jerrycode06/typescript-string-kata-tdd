@@ -61,4 +61,10 @@ describe("StringCalculator", () => {
     expect(calculator.add("1001,2000,3")).toBe(3);
     expect(calculator.add("//;\n1000;1001;2")).toBe(2);
   });
+
+  test("should support delimiters of any length", () => {
+    expect(calculator.add("//[***]\n1***2***3")).toBe(6);
+    expect(calculator.add("//[---]\n4---5---6")).toBe(15);
+    expect(calculator.add("//[abc]\n7abc8abc9")).toBe(24);
+  });
 });

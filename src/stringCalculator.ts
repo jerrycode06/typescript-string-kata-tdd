@@ -35,7 +35,14 @@ export class StringCalculator {
     let delimiter = ",";
     if (numbers.startsWith("//")) {
       const delimiterEndIndex = numbers.indexOf("\n");
-      delimiter = numbers.substring(2, delimiterEndIndex);
+      const delimiterPattern = numbers.substring(2, delimiterEndIndex);
+
+      if (delimiterPattern.startsWith("[") && delimiterPattern.endsWith("]")) {
+        delimiter = delimiterPattern.slice(1, -1);
+      } else {
+        delimiter = delimiterPattern;
+      }
+
       numbers = numbers.substring(delimiterEndIndex + 1);
     }
 
