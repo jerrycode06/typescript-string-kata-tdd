@@ -30,4 +30,10 @@ describe("StringCalculator", () => {
     expect(calculator.add("4\n5\n6")).toBe(15);
     expect(calculator.add("7,8\n9")).toBe(24);
   });
+
+  test("should support different delimiters", () => {
+    expect(calculator.add("//;\n1;2")).toBe(3);
+    expect(calculator.add("//|\n2|3|4")).toBe(9);
+    expect(calculator.add("//sep\n2sep3sep4")).toBe(9);
+  });
 });
