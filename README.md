@@ -8,6 +8,10 @@ This project implements a String Calculator following the principles of Test-Dri
 - Handles new lines as delimiters.
 - Support for custom delimiters.
 - Throws exceptions for negative numbers, listing all negative numbers in the exception message.
+- Gives how many times `add()` invoked.
+- Ignores numbers 1000 or greater.
+- Supports for delimiters of any length with the format `“//[delimiter]\n”`.
+- Support for multiple delimiters like - `“//[delim1][delim2]\n”`.
 
 ## Folder Structure
 
@@ -42,30 +46,35 @@ cd string-calculator
 ```
 
 2. Install Dependencies
+
 ```sh
 npm install
 ```
 
 ### Running the code
+
 To run this code and its tests, follow these steps:
 
 1. Run the tests:
+
 ```sh
 npm test
 ```
+
 This command runs the test suite using Jest, verifying that all implemented features and edge cases are handled correctly.
 
 ### Example Usage
+
 ```typescript
-import { StringCalculator } from './stringCalculator';
+import { StringCalculator } from "./stringCalculator";
 
 const calculator = new StringCalculator();
-console.log(calculator.add('1,2')); // Outputs: 3
-console.log(calculator.add('//;\n1;2')); // Outputs: 3
-console.log(calculator.add('1\n2,3')); // Outputs: 6
+console.log(calculator.add("1,2")); // Outputs: 3
+console.log(calculator.add("//;\n1;2")); // Outputs: 3
+console.log(calculator.add("1\n2,3")); // Outputs: 6
 try {
-    console.log(calculator.add('1,-2,3'));
+  console.log(calculator.add("1,-2,3"));
 } catch (e) {
-    console.error(e.message); // Outputs: Negatives not allowed: -2
+  console.error(e.message); // Outputs: Negatives not allowed: -2
 }
 ```
