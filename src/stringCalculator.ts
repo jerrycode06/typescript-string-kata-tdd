@@ -36,7 +36,6 @@ export class StringCalculator {
     if (numbers.startsWith("//")) {
       const delimiterEndIndex = numbers.indexOf("\n");
       const delimiterPattern = numbers.substring(2, delimiterEndIndex);
-      console.log({ delimiterPattern });
 
       if (delimiterPattern.startsWith("[") && delimiterPattern.endsWith("]")) {
         delimiters = this.extractMultipleDelimiters(delimiterPattern);
@@ -48,10 +47,6 @@ export class StringCalculator {
     }
 
     const sanitizedNumbers = numbers.replace(/\n/g, delimiters[0]);
-    console.log("Inside extractDelimiterAndNumbers()", {
-      delimiters,
-      sanitizedNumbers,
-    });
     return { delimiters, sanitizedNumbers };
   }
 
@@ -67,7 +62,6 @@ export class StringCalculator {
         delimiter += delimiterPattern[i];
       }
     }
-    console.log("Inside extractMultipleDelimiters()", { delimiters });
     return delimiters;
   }
 
@@ -79,7 +73,6 @@ export class StringCalculator {
     delimiters.forEach((delimiter) => {
       numArray = numArray.flatMap((num) => num.split(delimiter));
     });
-    console.log("Inside splitStringNumbersToIntegers", { numArray });
     return numArray.map((num) => parseInt(num, 10));
   }
 
