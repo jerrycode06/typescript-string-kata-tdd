@@ -1,5 +1,9 @@
 export class StringCalculator {
+  private addCallCount: number = 0;
+
   public add(numbers: string): number {
+    this.addCallCount++;
+
     if (numbers.length == 0) {
       return 0;
     }
@@ -18,6 +22,10 @@ export class StringCalculator {
     this.throwIfNegativeNumbers(numArray);
 
     return this.sumNumbers(numArray);
+  }
+
+  public getCalledCount(): number {
+    return this.addCallCount;
   }
 
   private extractDelimiterAndNumbers(numbers: string): {
@@ -50,6 +58,6 @@ export class StringCalculator {
   }
 
   private sumNumbers(numbers: number[]): number {
-    return numbers.reduce((sum, num) => sum + num, 0);
+    return numbers.reduce((sum, num) => sum + (num < 1000 ? num : 0), 0);
   }
 }

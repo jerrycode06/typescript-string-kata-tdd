@@ -46,4 +46,19 @@ describe("StringCalculator", () => {
       "Negatives not allowed: -2"
     );
   });
+
+  test("should return the number of times add() was called", () => {
+    expect(calculator.getCalledCount()).toBe(0);
+    calculator.add("1,2");
+    expect(calculator.getCalledCount()).toBe(1);
+    calculator.add("1\n2,3");
+    expect(calculator.getCalledCount()).toBe(2);
+  });
+
+  test("should ignore numbers 1000 or greater", () => {
+    expect(calculator.add("2,1000")).toBe(2);
+    expect(calculator.add("2,999,1000")).toBe(1001);
+    expect(calculator.add("1001,2000,3")).toBe(3);
+    expect(calculator.add("//;\n1000;1001;2")).toBe(2);
+  });
 });
